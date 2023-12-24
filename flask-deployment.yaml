@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask
+  template:
+    metadata:
+      labels:
+        app: flask
+    spec:
+      containers:
+      - name: flask
+        image: 309951242162.dkr.ecr.us-east-1.amazonaws.com/flaskpostgresapp:release_20231224_1
+        env:
+        - name: DB_NAME
+          value: postgres
+        - name: DB_USER
+          value: postgres
+        - name: DB_PASSWORD
+          value: mysecretpassword
+        - name: DB_HOST
+          value: 174.129.159.73  # Use the service name for DNS resolution
+        - name: DB_PORT
+          value: "5432"
+        - name: FLASK_APP
+          value: app.py
