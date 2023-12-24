@@ -1,16 +1,17 @@
 from flask import Flask, render_template
 import psycopg2
 from psycopg2 import sql
-
+import os
 app = Flask(__name__)
 
 # PostgreSQL database configuration
+# PostgreSQL database configuration using environment variables
 db_config = {
-    'dbname': 'postgres',
-    'user': 'postgres',
-    'password': 'mysecretpassword',
-    'host': '3.84.157.208',
-    'port': '5432',
+    'dbname': os.environ.get('DB_NAME', 'postgres'),
+    'user': os.environ.get('DB_USER', 'postgres'),
+    'password': os.environ.get('DB_PASSWORD', 'mysecretpassword'),
+    'host': os.environ.get('DB_HOST', 'localhost'),
+    'port': os.environ.get('DB_PORT', '5432'),
 }
 
 # Route to fetch data from PostgreSQL and render HTML template
